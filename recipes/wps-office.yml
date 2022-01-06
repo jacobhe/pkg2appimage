@@ -1,12 +1,14 @@
 # Wps office appimage 
 # Author linlinger
 # Date Fri Jan 22 2021
+# Updated on Thu Jan6 2022
 app: wps-office
 
 ingredients:
   packages:
     - libc6(>= 2.15)
     - libc6.1
+    - libstdc++6 (>= 4.6)
     - libfreetype6(>= 2.4)
     - libcups2
     - libglib2.0-0
