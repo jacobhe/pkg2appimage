@@ -26,7 +26,9 @@ ingredients:
   sources: 
     - deb http://us.archive.ubuntu.com/ubuntu/ impish  main restricted universe multiverse
   script:
-    - wget https://wdl1.cache.wps.cn/wps/download/ep/Linux2019/10702/wps-office_11.1.0.10702_amd64.deb
+    - src="https://website-prod.cache.wpscdn.com/23e68dc.js"
+    - url=$(curl "$src" | egrep -o 'linux_deb:"[^"]+"' | tr -d '"' | cut -d: -f2-)
+    - wget "$url"
 
 script:
   - cp ./usr/share/applications/wps-office-prometheus.desktop ./
