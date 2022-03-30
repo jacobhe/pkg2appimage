@@ -3,12 +3,12 @@ binpatch: true
 
 ingredients:
    packages: 
-  dist:  jammy
+  dist:  impish
   sources:
-    - deb "http://archive.ubuntu.com/ubuntu/  jammy main universe"
+    - deb "http://archive.ubuntu.com/ubuntu/  impish main universe"
   script:
     #-  wget -r -nd --no-parent -A 'microsoft-edge-stable_*_amd64.deb' https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/
-    - DLD=$(wget -q "https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/" -O - | grep deb | grep 100 | tail -n 1 | cut -d '"' -f 2)
+    - DLD=$(wget -q "https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/" -O - | grep deb | tail -n 1 | cut -d '"' -f 2)
     - wget -c "https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/$DLD"
 script:
   - cat > AppRun <<\EOF
