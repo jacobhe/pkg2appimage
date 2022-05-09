@@ -1,11 +1,19 @@
 # Official Chromium builds can be downloade from https://www.chromium.org/getting-involved/download-chromium
 app: Chromium
+binpatch: true
 
 ingredients:
+    packages:
+  dist:  jammy
+  sources:
+    - deb "http://archive.ubuntu.com/ubuntu/  jammy main universe"
   script:
-    - wget 'https://download-chromium.appspot.com/dl/Linux_x64?type=snapshots' -O chrome-linux.zip
-    - unzip chrome-linux.zip
-    - echo $VERSION
+    - LASTCHANGE_URL="https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/Linux_x64%2FLAST_CHANGE?alt=media"
+    - VERSION=$(curl -s -S $LASTCHANGE_URL)
+    - ZIP_URL="https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/Linux_x64%2F$VERSION%2Fchrome-linux.zip?alt=media"
+    - ZIP_FILE="${VERSION}-chrome-linux.zip"
+    - wget -c $ZIP_URL -O $ZIP_FILE
+    - unzip $ZIP_FILE
 
 script:
   - echo $VERSION
