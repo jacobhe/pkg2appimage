@@ -1,0 +1,33 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    container:
+      image: ubuntu:18.04
+      options: --privileged
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        apt-get update
+        apt-get install -y sudo libarchive-tools curl zsync squashfs-tools aria2 desktop-file-utils wget fuse binutils file
+
+    - name: Build and Release
+      run: |
+           bash -ex dogfeeding.sh
+           wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+           bash upload.sh ./out/pkg2appimage*.AppImage*
